@@ -1,0 +1,39 @@
+<div class="container">
+  <form [formGroup]="ingredientForm">
+    <div class="form-group">
+      <label>
+        Name: 
+        <input type="text" class="form-control" formControlName="title">
+      </label> 
+    </div>
+    <div class="form-group">
+      <label>
+        Measurement: 
+        <select class="form-control" formControlName="measurementId">
+          <option value="1">Weight</option>
+          <option value="2">Volume</option>
+          <option value="3">Each</option>
+
+        </select>
+      </label> 
+    </div>
+    <div class="form-group">
+      <label>
+        Category: 
+        <select class="form-control" formControlName="categoryId">
+          <option value="1">Produce</option>
+          <option value="2">Pantry</option>
+          <option value="3">Meat</option>
+          <option value="4">Dairy</option>
+        </select>
+      </label> 
+    </div>
+    <!-- <div class="form-group">
+      <label>
+        Name: 
+        <input type="text" class="form-control" formControlName="ingredientId">
+      </label> 
+    </div> -->
+  </form>
+  <button (click)="onSubmit()">Save</button>
+</div>
