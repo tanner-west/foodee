@@ -14,6 +14,7 @@ import { ViewRecipesComponent } from './view-recipes/view-recipes.component';
 import { NewIngredientComponent } from './new-ingredient/new-ingredient.component';
 import { ViewShoppingListComponent } from './view-shopping-list/view-shopping-list.component';
 import { SelectShoppingListComponent } from './select-shopping-list/select-shopping-list.component';
+import { SortShoppingListIngredientsPipe } from './sort-shopping-list-ingredients.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SelectShoppingListComponent } from './select-shopping-list/select-shopp
     ViewRecipesComponent,
     NewIngredientComponent,
     ViewShoppingListComponent,
-    SelectShoppingListComponent
+    SelectShoppingListComponent,
+    SortShoppingListIngredientsPipe
   ],
   imports: [
     BrowserModule,

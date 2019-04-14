@@ -48,3 +48,28 @@ div.select-shopping-list-container{
 img.recipe-card-add-recipe:hover{
     cursor: pointer;
 }
+
+span.shopping-list-ingredient-category{
+    color: gray;
+    margin-left: auto;
+}
+
+span.shopping-list-ingredient-category-heading{
+    margin-left: auto;
+}
+
+div.shopping-list{
+    display: flex;
+}
+
+div.shopping-list-header{
+    display: flex;
+    border-bottom: 1px black solid;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+img.shopping-list-sort-arrow{
+    width: 10px;
+    height: 10px;
+}

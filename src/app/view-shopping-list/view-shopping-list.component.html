@@ -2,9 +2,23 @@
   <div class="card">
     <div class="card-body">
       <h5>{{tempShoppingList.shoppingListTitle}} Shopping List</h5>
-      <div *ngFor="let ingredient of tempShoppingList.shoppingListIngredients">
-        <input type="checkbox" >
-        {{ingredient.ingredient.title}}
+      <div class="shopping-list-header">
+        <span class="shopping-list-ingredient-title-heading" (click)="setSortListBy('name')">
+          Item
+          <img class="shopping-list-sort-arrow" *ngIf="sortListBy === 'name-asc'" src="../../assets/arrow-up-s-fill.svg">
+          <img class="shopping-list-sort-arrow" *ngIf="sortListBy === 'name-desc'" src="../../assets/arrow-down-s-fill.svg">
+
+        </span>
+        <span class="shopping-list-ingredient-category-heading" (click)="setSortListBy('category')">
+          Category
+          <img class="shopping-list-sort-arrow" *ngIf="sortListBy === 'category-asc'" src="../../assets/arrow-up-s-fill.svg">
+          <img class="shopping-list-sort-arrow" *ngIf="sortListBy === 'category-desc'" src="../../assets/arrow-down-s-fill.svg">
+
+        </span>
+      </div>
+      <div class="shopping-list" *ngFor="let ingredient of tempShoppingList.shoppingListIngredients | sortShoppingListIngredients: sortListBy">
+        <span class="shopping-list-ingredient-title"> <input type="checkbox"> {{ingredient.ingredient.title}}</span>
+        <span class="shopping-list-ingredient-category" [innerHtml]="ingredientCategoryString(ingredient.ingredient.categoryId)"></span>
         <br />
       </div>
     </div>
