@@ -1,6 +1,4 @@
-
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Foodee</a>
     <button class="navbar-toggler hidden-sm-up" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -18,6 +16,14 @@
             </li>
         </ul>
     </div>
-</nav>
-
+</nav> -->
+<div class="nav-img-container">
+    <span id="nav-logo-text">Foodee</span>
+    <a class="nav-link" routerLink="/recipes" routerLinkActive="active"><img class="nav-img" src="../assets/recipe.svg"></a>
+    <a class="nav-link" routerLink="/new-recipe" routerLinkActive="active"><img class="nav-img" src="../assets/shopping-list.svg"></a>
+    <a class="nav-link" routerLink="/new-ingredient" routerLinkActive="active"><img class="nav-img" src="../assets/ingredient-edited.svg"></a>
+</div>
+<div class="select-shopping-list-container">
+    <app-select-shopping-list></app-select-shopping-list>
+</div>
 <router-outlet></router-outlet>

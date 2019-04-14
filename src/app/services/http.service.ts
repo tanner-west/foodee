@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Ingredient, Recipe } from '../app.models';
+import { Ingredient, Recipe, ShoppingListIngredient } from '../app.models';
 
 
 @Injectable({
@@ -20,6 +20,14 @@ export class HttpService {
     return this.http.get(this.baseUrl + "/ingredient/all")
   }
 
+  getAllShoppingLists(){
+    return this.http.get(this.baseUrl + "/shopping-list/all")
+  }
+  
+  getShoppingListById(shoppingListId: string){
+    return this.http.get(this.baseUrl + `/shopping-list/id/${shoppingListId}`)
+  }
+
   postNewRecipe(newRecipe: Recipe){
     var headers = new HttpHeaders();
     headers = headers.append('Accept', 'application/json; charset=utf-8');
@@ -34,6 +42,14 @@ export class HttpService {
     headers = headers.append('Content-Type', 'application/json; charset=utf-8');
 
     return this.http.post(this.baseUrl + '/ingredient/create', JSON.stringify(newRecipe), {headers})
+  }
+
+  postNewShoppingListIngredients(newShoppingListIngredients: ShoppingListIngredient[]){
+    var headers = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json; charset=utf-8');
+    headers = headers.append('Content-Type', 'application/json; charset=utf-8');
+
+    return this.http.post(this.baseUrl + '/shopping-list-ingredient/create', JSON.stringify(newShoppingListIngredients), {headers})
   }
 
 }

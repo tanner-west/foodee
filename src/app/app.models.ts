@@ -18,6 +18,19 @@ export class Ingredient {
     measurementId: number;
 }
 
+export class ShoppingListIngredient{
+    shoppingListIngredientId: string;
+    shoppingList: ShoppingList;
+    ingredient: Ingredient;
+    recipe: Recipe;
+}
+
+export class ShoppingList{
+    shoppingListId: string;
+    shoppingListTitle: string;
+    shoppingListIngredients: ShoppingListIngredient[];
+}
+
 export enum IngredientCategoryEnum {
     Produce = 1,
     Pantry = 2,

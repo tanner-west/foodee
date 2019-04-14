@@ -1,4 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
+
+h1{
+    font-size: 2rem;
+    text-align: center;
+    margin: 0 20px 20px 20px;
+}
+
+div.recipe-card-container{
+    padding-top: 15px;
+}
+
+div.recipe-card-controls{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
 .recipe-card-title {
     font-size: 1.2rem;
+}
+
+img.recipe-card-add-recipe{
+    height: 30px;
+    width: 30px;
+}
+
+img.nav-img{
+    height: 25px;
+    width: 25px;
+}
+
+#nav-logo-text{
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+div.nav-img-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px
+}
+
+div.select-shopping-list-container{
+    padding: 0 20px 20px 20px;
+}
+
+img.recipe-card-add-recipe:hover{
+    cursor: pointer;
 }

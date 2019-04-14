@@ -1,0 +1,12 @@
+<div *ngIf="tempShoppingList" class="container">
+  <div class="card">
+    <div class="card-body">
+      <h5>{{tempShoppingList.shoppingListTitle}} Shopping List</h5>
+      <div *ngFor="let ingredient of tempShoppingList.shoppingListIngredients">
+        <input type="checkbox" >
+        {{ingredient.ingredient.title}}
+        <br />
+      </div>
+    </div>
+  </div>
+</div>
