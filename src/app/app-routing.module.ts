@@ -9,7 +9,7 @@ const routes: Routes = [
   {path: 'new-recipe', component: NewRecipeComponent},
   {path: 'recipes', component: ViewRecipesComponent},
   {path: 'new-ingredient', component: NewIngredientComponent},
-  {path: 'temp-list', component: ViewShoppingListComponent}
+  {path: 'shopping-list/:id', component: ViewShoppingListComponent}
 
 ];
 

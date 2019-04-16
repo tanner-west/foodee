@@ -3,6 +3,7 @@ import { FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 import { HttpService } from '../services/http.service';
 import { Ingredient, Recipe } from '../app.models';
+import { CompleterService, CompleterData } from 'ng2-completer';
 
 @Component({
   selector: 'app-new-recipe',
@@ -12,8 +13,12 @@ import { Ingredient, Recipe } from '../app.models';
 export class NewRecipeComponent implements OnInit {
 
   databaseIngredients: Ingredient[];
+  dataService: CompleterData;
+  seatchStr: string;
+  captain: string;
 
-  constructor(private fb: FormBuilder, private http: HttpService) { }
+  constructor(private completerService: CompleterService, private fb: FormBuilder, private http: HttpService) { 
+  }
 
   recipeForm = this.fb.group({
     title: [''],
@@ -60,7 +65,14 @@ export class NewRecipeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.getAllIngredients().subscribe(res => this.databaseIngredients = res as Ingredient[])
+    this.http.getAllIngredients().subscribe(res => {
+      this.databaseIngredients = res as Ingredient[]
+      this.dataService = this.completerService.local(this.databaseIngredients, 'title', 'title');
+
+
+    })
+
+
   }
 
 

@@ -3,6 +3,7 @@ import { HttpService } from '../services/http.service';
 import { Recipe, RecipeIngredient, ShoppingListIngredient, Ingredient, ShoppingList } from '../app.models';
 import { v4 as uuid } from 'uuid';
 import { LocalStorageService } from '../services/local-storage.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-recipes',
@@ -13,7 +14,7 @@ export class ViewRecipesComponent implements OnInit {
 
   activeShoppingList: ShoppingList;
   recipes: Recipe[];
-  constructor(private httpService: HttpService, private localStorageService: LocalStorageService) { }
+  constructor(private toastrService: ToastrService, private httpService: HttpService, private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
     this.httpService.getAllRecipes().subscribe(res => {
@@ -34,7 +35,7 @@ export class ViewRecipesComponent implements OnInit {
   }
 
   addRecipeIngredientsToActiveShoppingList(recipe: Recipe){
-
+    let me = this;
     console.log(recipe);
     let shoppingListIngredientsList = [] as ShoppingListIngredient[];
     let activeShoppingListIngredients = this.activeShoppingList.shoppingListIngredients;
@@ -61,7 +62,12 @@ export class ViewRecipesComponent implements OnInit {
 
     }
 
-    this.httpService.postNewShoppingListIngredients(shoppingListIngredientsList).subscribe(res => console.log(res));
+    this.httpService.postNewShoppingListIngredients(shoppingListIngredientsList)
+    .subscribe(
+      function(res){
+        me.toastrService.success("Let's go shopping.", "Success")
+      }
+    );
 
   }
 

@@ -1,5 +1,7 @@
 <div class="container">
   <h1>Create a New Recipe</h1>
+  <ng2-completer titleField="title" searchFields="title" [(ngModel)]="searchStr" [datasource]="dataService" [minSearchLength]="0"></ng2-completer>
+
   <form [formGroup]="recipeForm">
     <div class="form-group">
       <label>

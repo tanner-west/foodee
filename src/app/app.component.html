@@ -20,7 +20,7 @@
 <div class="nav-img-container">
     <span id="nav-logo-text">Foodee</span>
     <a class="nav-link" routerLink="/recipes" routerLinkActive="active"><img class="nav-img" src="../assets/recipe.svg"></a>
-    <a class="nav-link" routerLink="/new-recipe" routerLinkActive="active"><img class="nav-img" src="../assets/shopping-list.svg"></a>
+    <a class="nav-link" [routerLink]="['/shopping-list', activeShoppingListId]" routerLinkActive="active"><img class="nav-img" src="../assets/shopping-list.svg"></a>
     <a class="nav-link" routerLink="/new-ingredient" routerLinkActive="active"><img class="nav-img" src="../assets/ingredient-edited.svg"></a>
 </div>
 <div class="select-shopping-list-container">

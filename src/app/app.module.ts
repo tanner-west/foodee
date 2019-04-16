@@ -16,6 +16,10 @@ import { ViewShoppingListComponent } from './view-shopping-list/view-shopping-li
 import { SelectShoppingListComponent } from './select-shopping-list/select-shopping-list.component';
 import { SortShoppingListIngredientsPipe } from './sort-shopping-list-ingredients.pipe';
 
+import { ToastrModule } from 'ngx-toastr';
+import { Ng2CompleterModule } from "ng2-completer";
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +37,9 @@ import { SortShoppingListIngredientsPipe } from './sort-shopping-list-ingredient
     NgbModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    Ng2CompleterModule,
+    ToastrModule.forRoot({timeOut: 2000})
     
   ],
   providers: [NgbModule],

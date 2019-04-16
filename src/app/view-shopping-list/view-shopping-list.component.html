@@ -1,7 +1,7 @@
-<div *ngIf="tempShoppingList" class="container">
+<div *ngIf="activeShoppingList" class="container">
   <div class="card">
     <div class="card-body">
-      <h5>{{tempShoppingList.shoppingListTitle}} Shopping List</h5>
+      <h5>{{activeShoppingList.shoppingListTitle}} Shopping List</h5>
       <div class="shopping-list-header">
         <span class="shopping-list-ingredient-title-heading" (click)="setSortListBy('name')">
           Item
@@ -16,11 +16,12 @@
 
         </span>
       </div>
-      <div class="shopping-list" *ngFor="let ingredient of tempShoppingList.shoppingListIngredients | sortShoppingListIngredients: sortListBy">
+      <div class="shopping-list" *ngFor="let ingredient of activeShoppingList.shoppingListIngredients | sortShoppingListIngredients: sortListBy">
         <span class="shopping-list-ingredient-title"> <input type="checkbox"> {{ingredient.ingredient.title}}</span>
         <span class="shopping-list-ingredient-category" [innerHtml]="ingredientCategoryString(ingredient.ingredient.categoryId)"></span>
         <br />
       </div>
     </div>
   </div>
+  <button (click)="showToast()">Toast</button>
 </div>
