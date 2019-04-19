@@ -17,7 +17,7 @@ import { SelectShoppingListComponent } from './select-shopping-list/select-shopp
 import { SortShoppingListIngredientsPipe } from './sort-shopping-list-ingredients.pipe';
 
 import { ToastrModule } from 'ngx-toastr';
-import { Ng2CompleterModule } from "ng2-completer";
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 
 @NgModule({
@@ -38,8 +38,8 @@ import { Ng2CompleterModule } from "ng2-completer";
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    Ng2CompleterModule,
-    ToastrModule.forRoot({timeOut: 2000})
+    ToastrModule.forRoot({timeOut: 2000}),
+    AutoCompleteModule
     
   ],
   providers: [NgbModule],

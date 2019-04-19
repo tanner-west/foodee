@@ -1,7 +1,5 @@
 <div class="container">
   <h1>Create a New Recipe</h1>
-  <ng2-completer titleField="title" searchFields="title" [(ngModel)]="searchStr" [datasource]="dataService" [minSearchLength]="0"></ng2-completer>
-
   <form [formGroup]="recipeForm">
     <div class="form-group">
       <label>
@@ -21,19 +19,23 @@
           <div class="form-group" [formGroup]=ingredientControl.controls.ingredient>
             <label>
               Ingredient:
-              <select *ngIf="databaseIngredients" class="form-control" formControlName="ingredientId">
+              <!-- <ng2-completer (selected)="onCompleterSelected($event, ingredientControl.controls.ingredient)" formControlName="ingredientId" inputClass="form-control" [datasource]="dataService" [minSearchLength]="0"></ng2-completer> -->
+
+              <!-- <select *ngIf="databaseIngredients" class="form-control" formControlName="ingredientId">
                 <option [value]=dbIngredient.ingredientId *ngFor="let dbIngredient of databaseIngredients">{{dbIngredient.title}}</option>
-              </select>
+              </select> -->
+              <p-autoComplete formControlName="ingredientId" [suggestions]="searchResults" (completeMethod)="search($event)" (onSelect)="onSelect($event, ingredientControl.controls.ingredient)" field="title" inputStyleClass="form-control"></p-autoComplete>
             </label>
           </div>
           <label>
             Qty:
-            <input type="text" class="form-control" formControlName="quantity">
+            <input type="text" class="form-control" formControlName="qty">
           </label>
         </div>
       </div>
       <button (click)="addIngredient()">Add Ingredient</button>
     </div>
     <button (click)="onSubmit()" [disabled]="!recipeForm.valid">Create New Recipe</button>
+    <button (click)="logFormValue()">log form value</button>
   </form>
 </div>

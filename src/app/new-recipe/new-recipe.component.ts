@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 import { HttpService } from '../services/http.service';
 import { Ingredient, Recipe } from '../app.models';
-import { CompleterService, CompleterData } from 'ng2-completer';
+
+// TODO: validate the form (especially to make sure ingredient controls contain the right values and are complete)
 
 @Component({
   selector: 'app-new-recipe',
@@ -13,11 +14,11 @@ import { CompleterService, CompleterData } from 'ng2-completer';
 export class NewRecipeComponent implements OnInit {
 
   databaseIngredients: Ingredient[];
-  dataService: CompleterData;
   seatchStr: string;
   captain: string;
+  searchResults: Ingredient[];
 
-  constructor(private completerService: CompleterService, private fb: FormBuilder, private http: HttpService) { 
+  constructor(private fb: FormBuilder, private http: HttpService) { 
   }
 
   recipeForm = this.fb.group({
@@ -28,7 +29,7 @@ export class NewRecipeComponent implements OnInit {
         ingredient: this.fb.group({
           ingredientId: this.fb.control('')
         }),
-        quantity: this.fb.control('')
+        qty: this.fb.control('')
       })
     ])
   })
@@ -43,11 +44,12 @@ export class NewRecipeComponent implements OnInit {
       ingredient: this.fb.group({
         ingredientId: this.fb.control('')
       }),
-      quantity: this.fb.control('')
+      qty: this.fb.control('')
     }));
   }
 
   onSubmit() {
+    console.log(this.createRecipe())
     this.http.postNewRecipe(this.createRecipe()).subscribe(res => console.log(res));
   }
 
@@ -58,16 +60,45 @@ export class NewRecipeComponent implements OnInit {
     for(let i=0; i<newRecipe.recipeIngredients.length; i++){
       newRecipe.recipeIngredients[i].recipeId = newRecipe.recipeId;
       newRecipe.recipeIngredients[i].recipeIngredientId = uuid();
+      newRecipe.recipeIngredients[i].qty = parseInt(newRecipe.recipeIngredients[i].qty.toString())
     }
 
   
     return newRecipe;
   }
 
+  logFormValue(){
+    console.log(this.recipeForm.value)
+  }
+
+  // onCompleterSelected($event, control: FormGroup){
+  //   console.log($event);
+    
+  //   control.controls['ingredientId'].setValue($event.originalObject.ingredientId, {emitEvent: false, emitModelToViewChange: false});
+
+  // }
+
+   onSelect($event, control: FormGroup){
+    console.log($event);
+    
+    control.controls['ingredientId'].setValue($event.ingredientId, {emitEvent: false, emitModelToViewChange: false});
+
+  }
+
+  search($event){
+    console.log($event)
+    this.searchResults = this.databaseIngredients;
+    let searchString = $event.query;
+    let newIngredientArray = this.databaseIngredients.filter( function(ingredient){
+      return ingredient.title.toLowerCase().includes(searchString.toLowerCase())
+    })
+    this.searchResults = newIngredientArray;
+  }
+
   ngOnInit() {
     this.http.getAllIngredients().subscribe(res => {
       this.databaseIngredients = res as Ingredient[]
-      this.dataService = this.completerService.local(this.databaseIngredients, 'title', 'title');
+      console.log(this.databaseIngredients)
 
 
     })
