@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 h1{
     font-size: 2rem;
     text-align: center;
@@ -74,11 +75,159 @@ img.shopping-list-sort-arrow{
     height: 10px;
 }
 
+ul.ingredient-list{
+    margin: 0;
+    padding: 0;
+}
+li.ingredient-list-item{
+    list-style-type: none;
+    padding: 10px;
+}
+
 .toast-success{
     background-color: white !important;
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cpath fill='rgb(0,0,0)' d='M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z'/%3E%3C/svg%3E") !important;
     color: black !important;
 
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+div.ui-toast-message-content{
+    background-color: white;
+}
+
+.ui-toast-close-icon::after{
+    content: 'x';
+}	
+
+div.form-row{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+div.form-col-80{
+    flex-basis: 80%;
+}
+
+div.form-col-70{
+    flex-basis: 70%;
+}
+
+div.form-col-10{
+    flex-basis: 10%;
+}
+
+div.form-col-20{
+    flex-basis: 20%;
+}
+
+img.image-upload-preview, img.image-upload-icon{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+img.image-upload-icon{
+    height: 50%;
+}
+
+img.image-upload-preview{
+    height: 85%;
+}
+
+img.image-upload-icon::after{
+    content: "Upload an image.";
+    color: black;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+button{
+    background: none;
+    border: 1px solid black;
+    margin: 5px;
+    border-radius: .25rem !important;
+    padding: .375rem .75rem;
+}
+
+label.file-upload{
+    border: 1px dashed black;
+    width: 100%;
+    height: 200px;
+    position: relative;
+}
+
+// label.file-upload::after{
+//     content: url(/./assets/image-2-line.svg);
+//     display: inline-block;
+//     width: 100px;
+//     height: 100px;
+//     left: 33%;
+//     top: 20%;
+//     position: absolute;
+//     color: black;
+// }
+
+input.recipe-img-input{
+    display: none;
+}
+
+input.form-control, select.form-control{
+    border: 1px solid black;
+}
+
+span.ui-autocomplete{
+    width: 100%;
+}
+
+
+img.remove-ingredient{
+    width: 30px;
+    height: 30px;
+}
+
+ul.ui-autocomplete-list{
+    background-color: white;
+}
+
+li.ui-state-highlight{
+    background-color: lightblue;
+}
+
+div.loading-gif-container{
+    min-height: 150px;
+}
+
+div.pagination-controls-container{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+span.pagination-page-numbers{
+    text-align: center;
+    
+}
+
+img.loading-gif{
+    height: 50px;
+    margin: 100px auto 20px auto;
+    display: block;
+}
+
+div.card{
+    border: 1px solid black;
+}
+
+button.full-width{
+    width: 100%;
+    margin: 20px 0;
+}
+
+a{
+    color: black;
+}

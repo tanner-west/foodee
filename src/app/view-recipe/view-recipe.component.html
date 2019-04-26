@@ -1,0 +1,14 @@
+<div *ngIf="activeRecipe" class="col-md-3 recipe-card-container">
+  <div class="card">
+    <img *ngIf="activeRecipe.asset.length" [src]=getAssetFilename(activeRecipe) class="card-img-top">
+    <div class="card-body">
+      <h2 class="recipe-card-title card-title">{{activeRecipe.title}}</h2>
+      <ul>
+        <li *ngFor="let recipeIngredient of activeRecipe.recipeIngredients">{{recipeIngredient.ingredient.title}}</li>
+      </ul>
+      <div class="recipe-card-controls">
+          <img (click)="addRecipeIngredientsToActiveShoppingList(recipe)" class="recipe-card-add-recipe" src="../../assets/pencil-line.svg">
+      </div>
+    </div>
+  </div>
+</div>

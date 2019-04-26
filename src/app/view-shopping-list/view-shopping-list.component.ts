@@ -57,14 +57,8 @@ export class ViewShoppingListComponent implements OnInit, OnDestroy {
     }
   }
 
-  showToast(){
-
-  }
-
   ngOnInit() {
     let me = this;
-
-    
     me.changedShoppingListSubscription = me.selectShoppingListService.emitActiveShoppingList.subscribe(function(val){
       me.httpService.getShoppingListById(val)
       .subscribe(res => {
@@ -84,12 +78,9 @@ export class ViewShoppingListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-
     let me = this;
     me.changedShoppingListSubscription.unsubscribe();
     me.paramMapSubscription.unsubscribe();
-
-
   }
 
 }

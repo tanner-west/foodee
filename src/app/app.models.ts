@@ -2,6 +2,7 @@ export class Recipe {
     recipeId: string;
     title: string;
     recipeIngredients: RecipeIngredient[];
+    asset: Asset[];
 }
 
 export class RecipeIngredient {
@@ -29,6 +30,10 @@ export class ShoppingList{
     shoppingListId: string;
     shoppingListTitle: string;
     shoppingListIngredients: ShoppingListIngredient[];
+}
+
+export class Asset{
+    filename: string;
 }
 
 export enum IngredientCategoryEnum {

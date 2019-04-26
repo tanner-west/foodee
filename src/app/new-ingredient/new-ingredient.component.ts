@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 import { HttpService } from '../services/http.service';
 import { Ingredient, Recipe } from '../app.models';
+import { MessageService } from 'primeng/api';
+import {ToastModule} from 'primeng/toast';
+
+
+
 @Component({
   selector: 'app-new-ingredient',
   templateUrl: './new-ingredient.component.html',
@@ -12,7 +18,7 @@ export class NewIngredientComponent implements OnInit {
 
   databaseIngredients: Ingredient[];
 
-  constructor(private fb: FormBuilder, private http: HttpService) { }
+  constructor(private toastService: MessageService, private zone: NgZone, private router: Router, private fb: FormBuilder, private http: HttpService) { }
 
   ingredientForm = this.fb.group({
     title: [''],
@@ -27,8 +33,15 @@ export class NewIngredientComponent implements OnInit {
   }
 
   onSubmit() {
+    let me = this;
     console.log(this.createIngredient());
-    this.http.postNewIngredient(this.createIngredient()).subscribe(res => console.log(res));
+    this.http.postNewIngredient(this.createIngredient()).subscribe(res => { 
+      console.log(res)
+      // me.zone.run(() =>{
+      //   this.router.navigate(['/ingredients'])
+      // })
+    me.router.navigate(['/ingredients/true'])
+    });
   }
 
   createIngredient(){

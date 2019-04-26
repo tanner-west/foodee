@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { Ingredient, Recipe, ShoppingListIngredient } from '../app.models';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -14,6 +15,15 @@ export class HttpService {
 
   getAllRecipes(){
     return this.http.get(this.baseUrl + "/recipe/all")
+  }
+
+  getRecipeById(recipeId: string){
+    return this.http.get(this.baseUrl + `/recipe/id/${recipeId}`)
+  }
+
+  getRecipesPage(pageNo: number){
+    return this.http.get(this.baseUrl + "/recipe/all/" + pageNo.toString())
+
   }
 
   getAllIngredients(){
@@ -50,6 +60,45 @@ export class HttpService {
     headers = headers.append('Content-Type', 'application/json; charset=utf-8');
 
     return this.http.post(this.baseUrl + '/shopping-list-ingredient/create', JSON.stringify(newShoppingListIngredients), {headers})
+  }
+
+  newPostNewRecipe(url: string, file: File, recipe): Observable<HttpEvent<any>>{
+    console.log(recipe)
+
+    let recipeJson = JSON.stringify(recipe);
+    
+    let formData = new FormData();
+    formData.append('file', file);
+    formData.append('recipe', recipeJson);
+
+    let params = new HttpParams();
+
+    const options = {
+      params: params,
+      reportProgress: true,
+      content: formData
+    };
+
+    const req = new HttpRequest('POST', url, formData, options);
+    return this.http.request(req);
+
+  }
+
+  uploadFile(url: string, file: File, recordId: string): Observable<HttpEvent<any>> {
+
+    let formData = new FormData();
+    formData.append('file', file);
+    formData.append('recipeId', recordId)
+
+    let params = new HttpParams();
+
+    const options = {
+      params: params,
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('POST', url, formData, options);
+    return this.http.request(req);
   }
 
 }

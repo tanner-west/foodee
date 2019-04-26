@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../services/http.service';
-import { Recipe, RecipeIngredient, ShoppingListIngredient, Ingredient, ShoppingList } from '../app.models';
+import { Recipe, RecipeIngredient, ShoppingListIngredient, Ingredient, ShoppingList, Asset } from '../app.models';
 import { v4 as uuid } from 'uuid';
 import { LocalStorageService } from '../services/local-storage.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,14 +14,31 @@ export class ViewRecipesComponent implements OnInit {
 
   activeShoppingList: ShoppingList;
   recipes: Recipe[];
+
+  dataIsLoading: boolean = false;
+  
+  currentPage: number;
+  totalPages: number;
+
   constructor(private toastrService: ToastrService, private httpService: HttpService, private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
+    this.dataIsLoading = true;
     this.httpService.getAllRecipes().subscribe(res => {
-      this.recipes  = res as [Recipe];
+      //TODO create a model for the Page response
+      console.log(res)
+      this.dataIsLoading = false;
+      this.currentPage = res['number'] + 1;
+      this.totalPages = res['totalPages']
+      this.recipes  = res['content'] as [Recipe];
       console.log(this.recipes)
     })
     this.getActiveShoppingList();
+  }
+
+  getAssetFilename(recipe: Recipe){
+    let recipeFilename = recipe.asset[0].filename;
+    return `http://localhost:57123/api/v1/assets/images/${recipeFilename}`
   }
 
 
@@ -71,4 +88,34 @@ export class ViewRecipesComponent implements OnInit {
 
   }
 
+  onNextPage(){
+    this.dataIsLoading = true;
+    this.httpService.getRecipesPage(this.currentPage).subscribe(res => {
+      this.dataIsLoading = false;
+      //TODO create a model for the Page response
+      console.log(res)
+      this.currentPage = res['number'] + 1;
+      this.totalPages = res['totalPages']
+      this.recipes  = res['content'] as [Recipe];
+      console.log(this.recipes)
+    })
+
+  }
+
+  onPreviousPage(){
+
+    //server pages are zero indexed
+    this.dataIsLoading = true;
+
+    this.httpService.getRecipesPage(this.currentPage - 2).subscribe(res => {
+      //TODO create a model for the Page response
+      this.dataIsLoading = false;
+      console.log(res)
+      this.currentPage = res['number'] + 1;
+      this.totalPages = res['totalPages']
+      this.recipes  = res['content'] as [Recipe];
+      console.log(this.recipes)
+    })
+
+  }
 }

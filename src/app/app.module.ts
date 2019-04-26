@@ -18,6 +18,14 @@ import { SortShoppingListIngredientsPipe } from './sort-shopping-list-ingredient
 
 import { ToastrModule } from 'ngx-toastr';
 import {AutoCompleteModule} from 'primeng/autocomplete';
+import {ToastModule} from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import {FileUploadModule} from 'primeng/fileupload';
+
+
+import { ViewIngredientsComponent } from './view-ingredients/view-ingredients.component';
+import { SortIngredientListPipe } from './sort-ingredient-list.pipe';
+import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
 
 
 @NgModule({
@@ -28,7 +36,11 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
     NewIngredientComponent,
     ViewShoppingListComponent,
     SelectShoppingListComponent,
-    SortShoppingListIngredientsPipe
+    SortShoppingListIngredientsPipe,
+    ViewIngredientsComponent,
+    SortIngredientListPipe,
+    ViewRecipeComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -39,10 +51,11 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
     HttpClientModule,
     FormsModule,
     ToastrModule.forRoot({timeOut: 2000}),
-    AutoCompleteModule
-    
+    AutoCompleteModule,
+    ToastModule,
+    FileUploadModule
   ],
-  providers: [NgbModule],
+  providers: [NgbModule, ToastModule, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

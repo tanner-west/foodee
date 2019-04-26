@@ -1,3 +1,3 @@
-<select class="form-control" (change)="setActiveShoppingListId($event)">
+<select class="form-control form-group" (change)="setActiveShoppingListId($event)">
   <option  *ngFor="let list of shoppingLists" [value]="list.shoppingListId" [selected]="getActiveShoppingListId() == list.shoppingListId">{{list.shoppingListTitle}}</option>
 </select>

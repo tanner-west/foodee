@@ -1,19 +1,31 @@
 <div class="container">
-  <h1>All Recipes</h1>
-  <div class="row">
+  <h1>Recipes</h1>
+  <div class="loading-gif-container" *ngIf="dataIsLoading">
+    <img class="loading-gif" src="../../assets/gradient-ring-loader.gif">
+  </div>
+  <div *ngIf="!dataIsLoading" class="row">
     <div class="col-md-3 recipe-card-container" *ngFor="let recipe of recipes">
-      <div class="card">
-        <img src="../../assets/pancakes.jpg" class="card-img-top">
-        <div class="card-body">
-          <h2 class="recipe-card-title card-title">{{recipe.title}}</h2>
-          <ul>
-            <li *ngFor="let recipeIngredient of recipe.recipeIngredients">{{recipeIngredient.ingredient.title}}</li>
-          </ul>
-          <div class="recipe-card-controls">
-              <img (click)="addRecipeIngredientsToActiveShoppingList(recipe)" class="recipe-card-add-recipe" src="../../assets/add-circle-line.svg">
+      <a [routerLink]="['/recipe', recipe.recipeId]">
+        <div class="card">
+          <img *ngIf="recipe.asset.length" [src]=getAssetFilename(recipe) class="card-img-top">
+          <div class="card-body">
+            <h2 class="recipe-card-title card-title">{{recipe.title}}</h2>
+            <ul>
+              <li *ngFor="let recipeIngredient of recipe.recipeIngredients">{{recipeIngredient.ingredient.title}}</li>
+            </ul>
+            <div class="recipe-card-controls">
+                <img (click)="addRecipeIngredientsToActiveShoppingList(recipe)" class="recipe-card-add-recipe" src="../../assets/add-circle-line.svg">
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
+  <a routerLink="/new-recipe"><button class="full-width">New Recipe</button></a>
+  <div class="pagination-controls-container">
+      <button (click)="onPreviousPage()">Previous Page</button>
+      <span class="pagination-page-numbers">{{currentPage}}/{{totalPages}}</span>
+      <button (click)="onNextPage()">Next Page</button>
+
+    </div>
 </div>
