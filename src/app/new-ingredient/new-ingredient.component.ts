@@ -3,9 +3,11 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 import { HttpService } from '../services/http.service';
-import { Ingredient, Recipe } from '../app.models';
+import { Ingredient, Recipe, MeasurementUnitIdEnum, MeasurementEnum } from '../app.models';
 import { MessageService } from 'primeng/api';
 import {ToastModule} from 'primeng/toast';
+import { MeasurementService } from '../services/measurement.service';
+
 
 
 
@@ -17,8 +19,11 @@ import {ToastModule} from 'primeng/toast';
 export class NewIngredientComponent implements OnInit {
 
   databaseIngredients: Ingredient[];
+  measurementUnits: string[];
 
-  constructor(private toastService: MessageService, private zone: NgZone, private router: Router, private fb: FormBuilder, private http: HttpService) { }
+  constructor(private measurementService: MeasurementService, private toastService: MessageService, private zone: NgZone, private router: Router, private fb: FormBuilder, private http: HttpService) {
+    this.measurementUnits = measurementService.returnMeasurementUnits();
+   }
 
   ingredientForm = this.fb.group({
     title: [''],
@@ -55,6 +60,7 @@ export class NewIngredientComponent implements OnInit {
   ngOnInit() {
     this.http.getAllIngredients().subscribe(res => {this.databaseIngredients = res as Ingredient[];
     console.log(this.databaseIngredients)})
+    console.log(this.measurementUnits)
   }
 
 

@@ -19,17 +19,30 @@
       </label>
     </div> -->
     <div formArrayName="recipeIngredients">
-      <div *ngFor="let ingredientControl of recipeIngredients.controls; let i=index">
-        <div class="form-group form-row" [formGroup]=ingredientControl>
-        <!-- <p-fileUpload name="myfile[]" customUpload="true" (uploadHandler)="myUploader($event)"></p-fileUpload> -->
-          <div class="form-group form-col-70" [formGroup]=ingredientControl.controls.ingredient>
-            <p-autoComplete placeholder="Ingredient" formControlName="ingredientId" [suggestions]="searchResults" (completeMethod)="search($event)" (onSelect)="onSelectIngredient($event, ingredientControl.controls.ingredient)" (blur)="logIng(ingredientControl)" (onBlur)="onBlurIngredient(ingredientControl, i)" field="title" inputStyleClass="form-control"></p-autoComplete>
+      <div class="card" *ngFor="let ingredientControl of recipeIngredients.controls; let i=index">
+        <div class="card-body">
+          <div class="form-group form-row" [formGroup]=ingredientControl>
+          <!-- <p-fileUpload name="myfile[]" customUpload="true" (uploadHandler)="myUploader($event)"></p-fileUpload> -->
+            <div class="form-group form-col-90" [formGroup]=ingredientControl.controls.ingredient>
+              <p-autoComplete placeholder="Ingredient" formControlName="ingredientId" [suggestions]="searchResults" (completeMethod)="search($event)" (onSelect)="onSelectIngredient($event, ingredientControl.controls.ingredient)" (blur)="logIng(ingredientControl)" (onBlur)="onBlurIngredient(ingredientControl, i)" field="title" inputStyleClass="form-control"></p-autoComplete>
+            </div>
+            
+            <div class="form-col-10">
+              <img (click)="onRemoveIngredient(i)" class="remove-ingredient" src="../../assets/close-circle-line.svg">
+            </div>
           </div>
-          <div class="form-group form-col-20" [formGroup]=ingredientControl>
-            <input placeholder="Qty" type="text" class="form-control" formControlName="qty">
-          </div>
-          <div class="form-col-10">
-            <img (click)="onRemoveIngredient(i)" class="remove-ingredient" src="../../assets/close-circle-line.svg">
+          <div class="form-row">
+            <div class="form-group form-col-20" [formGroup]=ingredientControl>
+              <input placeholder="Qty" type="text" class="form-control" formControlName="qty">
+            </div>
+            <div class="form-group form-col-80" [formGroup]=ingredientControl>
+              <select class="form-control" formControlName="measurementUnitId">
+                <option value="" [selected]="true">Measurement Unit</option>
+                <ng-container *ngFor="let unit of measurementUnits; let i = index">
+                  <option *ngIf="displayUnitBasedOnIngredientMeasurement(ingredientControl.controls.ingredient)" value="{{i + 1}}">{{unit}}</option>
+                </ng-container>
+              </select>
+            </div>
           </div>
         </div>
       </div>

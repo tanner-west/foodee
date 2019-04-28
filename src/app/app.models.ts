@@ -10,6 +10,7 @@ export class RecipeIngredient {
     ingredient: Ingredient;
     recipeId: string;
     qty: number;    
+    measurementUnitId: number;
 }
 
 export class Ingredient {
@@ -47,7 +48,27 @@ export enum MeasurementEnum {
     Weight = 1,
     Volume = 2,
     Each = 3
+}
 
+export enum MeasurementUnitIdEnum {
+    Pinch = 1,
+    Dash = 2,
+    Teaspoon = 3,
+    Tablespoon = 4,
+    Cup = 5,
+    Gallon = 6,
+    Milliliter = 7,
+    Liter = 8,
+    Ounce = 9,
+    Pound = 10,
+    Can = 11,
+    Gram = 12,
+    Sixteenth = 13,
+    Eighth = 14,
+    Quarter = 15,
+    Half = 16,
+    Whole = 17,
+    FluidOunce =18
 }
 
 

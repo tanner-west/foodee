@@ -116,8 +116,16 @@ div.form-col-10{
     flex-basis: 10%;
 }
 
+div.form-col-90{
+    flex-basis: 90%;
+}
+
 div.form-col-20{
     flex-basis: 20%;
+}
+
+div.form-col-100{
+    flex-basis: 100%;
 }
 
 img.image-upload-preview, img.image-upload-icon{
@@ -221,6 +229,7 @@ img.loading-gif{
 
 div.card{
     border: 1px solid black;
+    margin: 20px 0;
 }
 
 button.full-width{

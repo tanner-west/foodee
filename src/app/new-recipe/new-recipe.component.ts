@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 import { HttpService } from '../services/http.service';
-import { Ingredient, Recipe } from '../app.models';
+import { MeasurementService } from '../services/measurement.service';
+import { Ingredient, Recipe, MeasurementUnitIdEnum } from '../app.models';
 import * as validator from 'validator';
 
 // TODO: validate the form (especially to make sure ingredient controls contain the right values and are complete)
@@ -18,9 +19,10 @@ export class NewRecipeComponent implements OnInit {
   searchResults: Ingredient[];
   imageFile: File;
   imagePreviewSrc: string;
+  measurementUnits: string[];
 
-
-  constructor(private fb: FormBuilder, private http: HttpService) { 
+  constructor(private fb: FormBuilder, private http: HttpService, private measurementService: MeasurementService) { 
+    this.measurementUnits = measurementService.returnMeasurementUnits();
   }
 
   recipeForm = this.fb.group({
@@ -32,7 +34,8 @@ export class NewRecipeComponent implements OnInit {
         ingredient: this.fb.group({
           ingredientId: this.fb.control('')
         }),
-        qty: this.fb.control('')
+        qty: this.fb.control(''),
+        measurementUnitId: this.fb.control('')
       })
     ])
   })
@@ -52,9 +55,18 @@ export class NewRecipeComponent implements OnInit {
       ingredient: this.fb.group({
         ingredientId: this.fb.control('')
       }),
-      qty: this.fb.control('')
+      qty: this.fb.control(''),
+      measurementUnitId: this.fb.control('')
+
     }));
   }
+
+
+
+  qtyIsMultiple(index: number): boolean{
+    return parseInt(this.recipeForm.controls.recipeIngredients['controls'][index].controls['qty'].value) > 1;
+  }
+
 
   onBlurIngredient(control: FormControl, index: number){
     console.log(control.value)
@@ -79,24 +91,33 @@ export class NewRecipeComponent implements OnInit {
   onSubmit() {
     //console.log(this.createRecipe())
     //this.http.postNewRecipe(this.createRecipe()).subscribe(res => console.log(res));
-    this.http.newPostNewRecipe("http://localhost:57123/api/v1/recipe/create", this.imageFile, this.createRecipe()).subscribe(res => console.log(res))
+    if(this.imageFile){
+      this.http.newPostNewRecipe("http://localhost:57123/api/v1/recipe/create", this.imageFile, this.createRecipe()).subscribe(res => console.log(res))
+    } else {
+      this.http.postNewRecipe(this.createRecipe()).subscribe(res=>console.log(res))
+    }
   }
 
   createRecipe(){
+    let me = this;
     const newRecipe = this.recipeForm.value as Recipe;
     newRecipe.recipeId = uuid();
     
     delete newRecipe['image'];
 
     for(let i= newRecipe.recipeIngredients.length - 1; i>=0; i--){
+      console.log(i)
       if(newRecipe.recipeIngredients[i].ingredient.ingredientId == null || newRecipe.recipeIngredients[i].qty == null){
         let spliced = newRecipe.recipeIngredients.splice(i, 1);
         console.log(spliced)
       } else {
+
         newRecipe.recipeIngredients[i].recipeId = newRecipe.recipeId;
         newRecipe.recipeIngredients[i].recipeIngredientId = uuid();
-        newRecipe.recipeIngredients[i].qty = parseInt(newRecipe.recipeIngredients[i].qty.toString())
+        //newRecipe.recipeIngredients[i].qty = parseInt(newRecipe.recipeIngredients[i].qty.toString())
+        newRecipe.recipeIngredients[i].qty = me.measurementService.convertQtyByEnum(newRecipe.recipeIngredients[i].qty,newRecipe.recipeIngredients[i].measurementUnitId)
       }
+        console.log(newRecipe.recipeIngredients)
     }
 
   
@@ -152,13 +173,16 @@ export class NewRecipeComponent implements OnInit {
     )
   }
 
+  displayUnitBasedOnIngredientMeasurement(ingredient: any){
+    return true;
+  }
+
   ngOnInit() {
     this.http.getAllIngredients().subscribe(res => {
       this.databaseIngredients = res as Ingredient[]
-      console.log(this.databaseIngredients)
       this.validateThing()
-
     })
+    console.log(this.measurementService.returnMeasurementUnits());
 
 
   }

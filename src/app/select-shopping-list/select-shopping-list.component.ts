@@ -16,7 +16,11 @@ export class SelectShoppingListComponent implements OnInit {
   constructor(private selectShoppingListService: SelectShoppingListService, private httpService: HttpService, private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
-    this.httpService.getAllShoppingLists().subscribe(res => this.shoppingLists = res as ShoppingList[])
+    this.httpService.getAllShoppingLists()
+    .subscribe(
+      res => this.shoppingLists = res as ShoppingList[],
+      err => console.log(err)
+    )
   }
 
   setActiveShoppingListId($event){

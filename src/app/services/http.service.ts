@@ -43,7 +43,7 @@ export class HttpService {
     headers = headers.append('Accept', 'application/json; charset=utf-8');
     headers = headers.append('Content-Type', 'application/json; charset=utf-8');
 
-    return this.http.post(this.baseUrl + '/recipe/create', JSON.stringify(newRecipe), {headers})
+    return this.http.post(this.baseUrl + '/recipe/create-without-image', JSON.stringify(newRecipe), {headers})
   }
 
   postNewIngredient(newRecipe: Ingredient){
