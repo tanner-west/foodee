@@ -38,7 +38,9 @@ export class ViewRecipesComponent implements OnInit {
 
   getAssetFilename(recipe: Recipe){
     let recipeFilename = recipe.asset[0].filename;
-    return `http://localhost:57123/api/v1/assets/images/${recipeFilename}`
+    let url = `https://s3.us-east-2.amazonaws.com/net.tannerwest.foodee-uploads/${recipeFilename}`
+    console.log(url)
+    return {'background-image': `url(${url})`}
   }
 
 
@@ -51,7 +53,9 @@ export class ViewRecipesComponent implements OnInit {
     })
   }
 
-  addRecipeIngredientsToActiveShoppingList(recipe: Recipe){
+  addRecipeIngredientsToActiveShoppingList(recipe: Recipe, event: Event){
+    event.stopPropagation();
+    console.log(event)
     let me = this;
     console.log(recipe);
     let shoppingListIngredientsList = [] as ShoppingListIngredient[];

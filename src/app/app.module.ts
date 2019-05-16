@@ -22,10 +22,12 @@ import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import {FileUploadModule} from 'primeng/fileupload';
 
+import { NgxPicaModule } from 'ngx-pica';
 
 import { ViewIngredientsComponent } from './view-ingredients/view-ingredients.component';
 import { SortIngredientListPipe } from './sort-ingredient-list.pipe';
 import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
+import { EditRecipeComponent} from './new-recipe/edit-recipe.component';
 
 
 @NgModule({
@@ -39,7 +41,8 @@ import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
     SortShoppingListIngredientsPipe,
     ViewIngredientsComponent,
     SortIngredientListPipe,
-    ViewRecipeComponent
+    ViewRecipeComponent,
+    EditRecipeComponent
     
   ],
   imports: [
@@ -53,7 +56,8 @@ import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
     ToastrModule.forRoot({timeOut: 2000}),
     AutoCompleteModule,
     ToastModule,
-    FileUploadModule
+    FileUploadModule,
+    NgxPicaModule
   ],
   providers: [NgbModule, ToastModule, MessageService],
   bootstrap: [AppComponent]

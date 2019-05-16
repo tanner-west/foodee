@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>Create a New Recipe</h1>
+  <h1>{{pageAction}} Recipe</h1>
   <form [formGroup]="recipeForm">
     <div class="form-group">
       <label class="file-upload">
@@ -24,7 +24,7 @@
           <div class="form-group form-row" [formGroup]=ingredientControl>
           <!-- <p-fileUpload name="myfile[]" customUpload="true" (uploadHandler)="myUploader($event)"></p-fileUpload> -->
             <div class="form-group form-col-90" [formGroup]=ingredientControl.controls.ingredient>
-              <p-autoComplete placeholder="Ingredient" formControlName="ingredientId" [suggestions]="searchResults" (completeMethod)="search($event)" (onSelect)="onSelectIngredient($event, ingredientControl.controls.ingredient)" (blur)="logIng(ingredientControl)" (onBlur)="onBlurIngredient(ingredientControl, i)" field="title" inputStyleClass="form-control"></p-autoComplete>
+              <p-autoComplete placeholder="Ingredient" formControlName="ingredientPicker" [suggestions]="searchResults" (completeMethod)="search($event)" (onSelect)="onSelectIngredient($event, ingredientControl.controls.ingredient)" (blur)="logIng(ingredientControl)" (onBlur)="onBlurIngredient(ingredientControl, i)" field="title" inputStyleClass="form-control"></p-autoComplete>
             </div>
             
             <div class="form-col-10">
@@ -37,7 +37,7 @@
             </div>
             <div class="form-group form-col-80" [formGroup]=ingredientControl>
               <select class="form-control" formControlName="measurementUnitId">
-                <option value="" [selected]="true">Measurement Unit</option>
+                <option value="">Measurement Unit</option>
                 <ng-container *ngFor="let unit of measurementUnits; let i = index">
                   <option *ngIf="displayUnitBasedOnIngredientMeasurement(ingredientControl.controls.ingredient)" value="{{i + 1}}">{{unit}}</option>
                 </ng-container>
@@ -49,6 +49,7 @@
     </div>
 
   </form>
+  <!-- <button (click)="logFormValue()">log</button> -->
   <button class="full-width" (click)="addIngredient()">Add Ingredient</button>
   <button class="full-width" (click)="onSubmit()" [disabled]="!recipeForm.valid">Save Recipe</button>
 </div>

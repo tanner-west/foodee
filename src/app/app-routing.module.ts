@@ -6,6 +6,7 @@ import { NewIngredientComponent } from './new-ingredient/new-ingredient.componen
 import { ViewShoppingListComponent } from './view-shopping-list/view-shopping-list.component';
 import { ViewIngredientsComponent } from './view-ingredients/view-ingredients.component';
 import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
+import { EditRecipeComponent } from './new-recipe/edit-recipe.component';
 
 const routes: Routes = [
   {path: 'new-recipe', component: NewRecipeComponent},
@@ -14,7 +15,9 @@ const routes: Routes = [
   {path: 'shopping-list/:id', component: ViewShoppingListComponent},
   {path: 'ingredients/:from-create-new', component: ViewIngredientsComponent},
   {path: 'ingredients', component: ViewIngredientsComponent},
-  {path: 'recipe/:id', component: ViewRecipeComponent}
+  {path: 'recipe/:id', component: ViewRecipeComponent},
+  {path: 'edit-recipe/:id', component: EditRecipeComponent},
+  {path: '', redirectTo: '/recipes', pathMatch: 'full'}
 
 
 ];

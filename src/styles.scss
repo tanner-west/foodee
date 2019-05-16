@@ -7,20 +7,27 @@ h1{
     margin: 0 20px 20px 20px;
 }
 
-div.recipe-card-container{
-    padding-top: 15px;
-}
+// div.recipe-card-container{
+//     padding-top: 15px;
+// }
 
 div.recipe-card-controls{
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: space-between;
 }
 
 .recipe-card-title {
     font-size: 1.2rem;
+    margin: 0;
+    line-height: 1.5;
 }
 
 img.recipe-card-add-recipe{
+    height: 30px;
+    width: 30px;
+}
+
+img.recipe-card-delete-recipe{
     height: 30px;
     width: 30px;
 }
@@ -239,4 +246,15 @@ button.full-width{
 
 a{
     color: black;
+}
+
+.recipe-card-body{
+    display: flex;
+    justify-content: space-between;
+}
+
+.recipe-card-header{
+    height: 150px;
+    background-size: cover;
+    background-position: center;
 }

@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { Ingredient, Recipe, ShoppingListIngredient } from '../app.models';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+
+
 
 
 @Injectable({
@@ -11,7 +14,7 @@ export class HttpService {
   
   constructor(public http: HttpClient) { }
 
-  baseUrl: string = "http://localhost:57123/api/v1";
+  baseUrl: string = environment.baseUrl;
 
   getAllRecipes(){
     return this.http.get(this.baseUrl + "/recipe/all")
@@ -19,6 +22,10 @@ export class HttpService {
 
   getRecipeById(recipeId: string){
     return this.http.get(this.baseUrl + `/recipe/id/${recipeId}`)
+  }
+
+  deleteRecipeById(recipeId: string){
+    return this.http.delete(this.baseUrl + `/recipe/id/${recipeId}`)
   }
 
   getRecipesPage(pageNo: number){

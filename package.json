@@ -24,6 +24,7 @@
     "@ng-bootstrap/ng-bootstrap": "^4.1.1",
     "@types/validator": "^10.11.0",
     "core-js": "^2.5.4",
+    "ngx-pica": "^1.1.4",
     "ngx-toastr": "^10.0.2",
     "primeng": "^7.1.1",
     "rxjs": "~6.3.3",

@@ -4,21 +4,27 @@
     <img class="loading-gif" src="../../assets/gradient-ring-loader.gif">
   </div>
   <div *ngIf="!dataIsLoading" class="row">
-    <div class="col-md-3 recipe-card-container" *ngFor="let recipe of recipes">
-      <a [routerLink]="['/recipe', recipe.recipeId]">
+    <div class="col-md-12 recipe-card-container" *ngFor="let recipe of recipes">
         <div class="card">
-          <img *ngIf="recipe.asset.length" [src]=getAssetFilename(recipe) class="card-img-top">
-          <div class="card-body">
-            <h2 class="recipe-card-title card-title">{{recipe.title}}</h2>
-            <ul>
+          <a [routerLink]="['/recipe', recipe.recipeId]">
+    <div class="recipe-card-header" *ngIf="recipe.asset.length" [ngStyle]="getAssetFilename(recipe)">
+
+            </div>
+            <!-- <img *ngIf="recipe.asset.length" [src]=getAssetFilename(recipe) class="card-img-top"> -->
+          </a>
+          <div class="card-body recipe-card-body">
+            <a [routerLink]="['/recipe', recipe.recipeId]">
+
+              <h2 class="recipe-card-title card-title">{{recipe.title}}</h2>
+            </a>
+            <!-- <ul>
               <li *ngFor="let recipeIngredient of recipe.recipeIngredients">{{recipeIngredient.ingredient.title}}</li>
-            </ul>
+            </ul> -->
             <div class="recipe-card-controls">
-                <img (click)="addRecipeIngredientsToActiveShoppingList(recipe)" class="recipe-card-add-recipe" src="../../assets/add-circle-line.svg">
+                <img (click)="addRecipeIngredientsToActiveShoppingList(recipe, $event)" class="recipe-card-add-recipe" src="../../assets/add-circle-line.svg">
             </div>
           </div>
         </div>
-      </a>
     </div>
   </div>
   <a routerLink="/new-recipe"><button class="full-width">New Recipe</button></a>
