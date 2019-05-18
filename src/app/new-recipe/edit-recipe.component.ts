@@ -32,6 +32,7 @@ export class EditRecipeComponent implements OnInit {
   paramMapSubscription: Subscription;
   activeRecipe: Recipe
   pageAction: string = "Edit"
+  dataIsLoading: boolean = false;
 
   constructor(private picaService: NgxPicaService, private router: Router, private toastrService: ToastrService, private httpService: HttpService ,private route: ActivatedRoute, private fb: FormBuilder, private http: HttpService, private measurementService: MeasurementService) { 
     this.measurementUnits = measurementService.returnMeasurementUnits();
@@ -118,13 +119,14 @@ export class EditRecipeComponent implements OnInit {
 
   onSubmit() {
     let me = this;
+    me.dataIsLoading = true;
     let newRecipe = this.createRecipe()
     //return;
     //this.http.postNewRecipe(this.createRecipe()).subscribe(res => console.log(res));
     if(this.imageFile){
       console.log(this.imageFile)
       this.http.newPostNewRecipe(`${environment.baseUrl}/recipe/create`, this.imageFile, newRecipe).subscribe(res => {
-        console.log(res)
+        me.dataIsLoading = false;
         if(res instanceof HttpResponse && res.status == 200){
           me.toastrService.success("Recipe created successfully.", "Success");
           me.router.navigate(['/recipe/' + newRecipe.recipeId])
@@ -136,7 +138,6 @@ export class EditRecipeComponent implements OnInit {
     } else {
       let newRecipe:Recipe = this.createRecipe();
       this.http.postNewRecipe(newRecipe).subscribe(res=>{
-        console.log(res)
         // if(res instanceof HttpResponse && res.status == 200){
 
           me.toastrService.success("Recipe created successfully.", "Success");
@@ -157,25 +158,18 @@ export class EditRecipeComponent implements OnInit {
     delete newRecipe['image'];
 
     for(let i= newRecipe.recipeIngredients.length - 1; i>=0; i--){
-      console.log(i)
       if(newRecipe.recipeIngredients[i].ingredient.ingredientId == null || newRecipe.recipeIngredients[i].qty == null){
         let spliced = newRecipe.recipeIngredients.splice(i, 1);
-        console.log(spliced)
       } else {
 
         newRecipe.recipeIngredients[i].recipeId = newRecipe.recipeId;
         if(!newRecipe.recipeIngredients[i].recipeIngredientId){
-          console.log("i'll create a uuid for this one")
           newRecipe.recipeIngredients[i].recipeIngredientId = uuid();
         }
         //newRecipe.recipeIngredients[i].qty = parseInt(newRecipe.recipeIngredients[i].qty.toString())
         newRecipe.recipeIngredients[i].qty = me.measurementService.convertQtyByEnum(newRecipe.recipeIngredients[i].qty,newRecipe.recipeIngredients[i].measurementUnitId)
       }
-        console.log(newRecipe.recipeIngredients)
     }
-
-  
-    console.log(newRecipe)
     return newRecipe;
   }
 
@@ -191,9 +185,7 @@ export class EditRecipeComponent implements OnInit {
   // }
 
    onSelectIngredient($event, control: FormGroup){
-    
     control.controls['ingredientId'].setValue($event.ingredientId, {emitEvent: false, emitModelToViewChange: false});
-
   }
   onSelectImage($event){
     
@@ -206,7 +198,7 @@ export class EditRecipeComponent implements OnInit {
 
     // }
 
-    this.picaService.resizeImage(upload, 500, 500, {aspectRatio: {keepAspectRatio: true}})
+    this.picaService.compressImage(upload, 0.3)
     .subscribe((resizedFile) => {
 
       me.imageFile = resizedFile;
@@ -215,7 +207,6 @@ export class EditRecipeComponent implements OnInit {
       urlReader.addEventListener('load', (readerEvent:any) => {
         me.imagePreviewSrc = readerEvent.target.result;
       })
-
       // var bufferReader = new FileReader();
       // bufferReader.readAsArrayBuffer(resizedFile);
       // bufferReader.addEventListener('load', (readerEvent: any) => {
@@ -223,9 +214,6 @@ export class EditRecipeComponent implements OnInit {
 
       // })
     })
-
-
-
   }
 
   search($event){
@@ -275,10 +263,5 @@ export class EditRecipeComponent implements OnInit {
 
       })
     })
-
-
-
   }
-
-
 }

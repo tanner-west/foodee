@@ -16,7 +16,9 @@ import { ToastrService } from 'ngx-toastr';
 export class ViewRecipeComponent implements OnInit {
 
   paramMapSubscription: Subscription;
-  activeRecipe: Recipe
+  activeRecipe: Recipe;
+  dataIsLoading: boolean = false;
+
 
 
   constructor(private toastrService: ToastrService, private router: Router, private route: ActivatedRoute, private httpService: HttpService) { }
@@ -27,15 +29,14 @@ export class ViewRecipeComponent implements OnInit {
       me.httpService.getRecipeById(params.get('id'))
       .subscribe(res => {
         me.activeRecipe = res as Recipe;
-        console.log(me.activeRecipe)
       })
     })
   }
 
+
   getAssetFilename(recipe: Recipe){
     let recipeFilename = recipe.asset[0].filename;
     let url = `https://s3.us-east-2.amazonaws.com/net.tannerwest.foodee-uploads/${recipeFilename}`
-    console.log(url)
     return {'background-image': `url(${url})`}
   }
 
@@ -45,10 +46,12 @@ export class ViewRecipeComponent implements OnInit {
 
   deleteRecipe(){
     let me = this;
-    
+    me.dataIsLoading = true;
     if(confirm("Are you sure you want to delete this recipe?")){
+      
       this.httpService.deleteRecipeById(this.activeRecipe.recipeId).subscribe(res => {
-        console.log(res)
+        me.dataIsLoading = false;
+
         if(res == true){
           me.toastrService.success("Recipe deleted.", "Success")
           this.router.navigate(['/'])
@@ -58,7 +61,6 @@ export class ViewRecipeComponent implements OnInit {
         }
       })
     } else {
-      console.log("No, don't delete.")
     }
   }
 

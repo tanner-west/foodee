@@ -20,6 +20,8 @@ export class ViewShoppingListComponent implements OnInit, OnDestroy {
   sortListBy: string = 'name-asc';
   changedShoppingListSubscription: Subscription;
   paramMapSubscription: Subscription;
+  dataIsLoading: boolean = false;
+
 
   constructor(private toastrService: ToastrService, private location: Location, private selectShoppingListService: SelectShoppingListService, private httpService: HttpService, private route: ActivatedRoute) { }
 
@@ -59,9 +61,12 @@ export class ViewShoppingListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     let me = this;
+    me.dataIsLoading = true;
     me.changedShoppingListSubscription = me.selectShoppingListService.emitActiveShoppingList.subscribe(function(val){
       me.httpService.getShoppingListById(val)
       .subscribe(res => {
+        me.dataIsLoading = false;
+
         me.activeShoppingList = res as ShoppingList;
         me.location.replaceState(`/shopping-list/${val}`)
       })
@@ -70,6 +75,7 @@ export class ViewShoppingListComponent implements OnInit, OnDestroy {
     me.paramMapSubscription = me.route.paramMap.subscribe(function(params){
       me.httpService.getShoppingListById(params.get('id'))
       .subscribe(res => {
+        me.dataIsLoading = false;
         me.activeShoppingList = res as ShoppingList;
       })
 

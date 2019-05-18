@@ -28,7 +28,9 @@ export class NewRecipeComponent implements OnInit {
   imageFile: File;
   imagePreviewSrc: string;
   measurementUnits: string[];
-  pageAction: string = "Create"
+  pageAction: string = "Create";
+  dataIsLoading: boolean = false;
+
 
 
   constructor(private picaService: NgxPicaService, private router: Router, private toastrService: ToastrService, private fb: FormBuilder, private http: HttpService, private measurementService: MeasurementService) { 
@@ -102,13 +104,14 @@ export class NewRecipeComponent implements OnInit {
 
   onSubmit() {
     let me = this;
+    me.dataIsLoading = true;
     let newRecipe = this.createRecipe()
     //return;
     //this.http.postNewRecipe(this.createRecipe()).subscribe(res => console.log(res));
     if(this.imageFile){
       //this.http.newPostNewRecipe("http://foodee-env.2j8zvpuypp.us-east-2.elasticbeanstalk.com/api/v1/recipe/create", this.imageFile, this.createRecipe()).subscribe(res => console.log(res))
       this.http.newPostNewRecipe(`${environment.baseUrl}/recipe/create`, this.imageFile, newRecipe).subscribe(res => {
-        console.log(res)
+        me.dataIsLoading = false;
         if(res instanceof HttpResponse && res.status == 200){
           me.toastrService.success("Recipe created successfully.", "Success");
           me.router.navigate(['/recipe/' + newRecipe.recipeId])

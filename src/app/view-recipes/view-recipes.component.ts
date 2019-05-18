@@ -26,20 +26,18 @@ export class ViewRecipesComponent implements OnInit {
     this.dataIsLoading = true;
     this.httpService.getAllRecipes().subscribe(res => {
       //TODO create a model for the Page response
-      console.log(res)
       this.dataIsLoading = false;
       this.currentPage = res['number'] + 1;
       this.totalPages = res['totalPages']
       this.recipes  = res['content'] as [Recipe];
-      console.log(this.recipes)
     })
     this.getActiveShoppingList();
   }
 
+  //TODO - get this function out of the template; it runs over and over on change detection
   getAssetFilename(recipe: Recipe){
     let recipeFilename = recipe.asset[0].filename;
     let url = `https://s3.us-east-2.amazonaws.com/net.tannerwest.foodee-uploads/${recipeFilename}`
-    console.log(url)
     return {'background-image': `url(${url})`}
   }
 
@@ -49,15 +47,14 @@ export class ViewRecipesComponent implements OnInit {
     this.httpService.getShoppingListById(this.localStorageService.getActiveShoppingListId())
     .subscribe(res => {
       this.activeShoppingList = res as ShoppingList;
-      console.log(this.activeShoppingList)
     })
   }
 
   addRecipeIngredientsToActiveShoppingList(recipe: Recipe, event: Event){
+
     event.stopPropagation();
-    console.log(event)
+    this.dataIsLoading = true;
     let me = this;
-    console.log(recipe);
     let shoppingListIngredientsList = [] as ShoppingListIngredient[];
     let activeShoppingListIngredients = this.activeShoppingList.shoppingListIngredients;
     
@@ -86,6 +83,7 @@ export class ViewRecipesComponent implements OnInit {
     this.httpService.postNewShoppingListIngredients(shoppingListIngredientsList)
     .subscribe(
       function(res){
+        me.dataIsLoading = false;
         me.toastrService.success("Let's go shopping.", "Success")
       }
     );
@@ -97,11 +95,9 @@ export class ViewRecipesComponent implements OnInit {
     this.httpService.getRecipesPage(this.currentPage).subscribe(res => {
       this.dataIsLoading = false;
       //TODO create a model for the Page response
-      console.log(res)
       this.currentPage = res['number'] + 1;
       this.totalPages = res['totalPages']
       this.recipes  = res['content'] as [Recipe];
-      console.log(this.recipes)
     })
 
   }
@@ -114,11 +110,9 @@ export class ViewRecipesComponent implements OnInit {
     this.httpService.getRecipesPage(this.currentPage - 2).subscribe(res => {
       //TODO create a model for the Page response
       this.dataIsLoading = false;
-      console.log(res)
       this.currentPage = res['number'] + 1;
       this.totalPages = res['totalPages']
       this.recipes  = res['content'] as [Recipe];
-      console.log(this.recipes)
     })
 
   }

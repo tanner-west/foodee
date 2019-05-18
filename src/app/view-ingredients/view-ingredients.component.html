@@ -1,19 +1,23 @@
 <div class="container">
-  <h1>All Ingredients</h1>
-  <div class="card">
-    <div class="card-body">
-      <ul *ngIf="ingredients" class="ingredient-list">
-        <li *ngFor="let ingredient of ingredients | sortIngredientList" class="ingredient-list-item">
-          <span>{{ingredient.title}}</span>
-        </li>
-        <li class="ingredient-list-item">
-          <a routerLink="/new-ingredient">
-            <img class="nav-img" src="../../assets/add-box-line.svg"><span> Create New Ingredient</span>
-          </a>
-        </li>
-      </ul>
-    </div>
+  <div class="loading-gif-container" *ngIf="dataIsLoading">
+    <img class="loading-gif" src="../../assets/gradient-ring-loader.gif">
   </div>
-  <p-toast></p-toast>
-
+  <div *ngIf="!dataIsLoading">
+    <h1>All Ingredients</h1>
+    <div class="card">
+      <div class="card-body">
+        <ul *ngIf="ingredients" class="ingredient-list">
+          <li *ngFor="let ingredient of ingredients | sortIngredientList" class="ingredient-list-item">
+            <span>{{ingredient.title}}</span>
+          </li>
+          <li class="ingredient-list-item">
+            <a routerLink="/new-ingredient">
+              <img class="nav-img" src="../../assets/add-box-line.svg"><span> Create New Ingredient</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <p-toast></p-toast>
+  </div>
 </div>

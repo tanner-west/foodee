@@ -14,6 +14,8 @@ import { MessageService } from 'primeng/api';
 export class ViewIngredientsComponent implements OnInit {
 
   ingredients: Ingredient[];
+  dataIsLoading: boolean = false;
+
 
   constructor(private toastService: MessageService, private route: ActivatedRoute, private httpService: HttpService, private localStorageService: LocalStorageService) { }
 
@@ -31,8 +33,9 @@ export class ViewIngredientsComponent implements OnInit {
 
   }
   ngOnInit() {
-    
+    this.dataIsLoading = true;
     this.httpService.getAllIngredients().subscribe(res => {
+      this.dataIsLoading = false;
       this.ingredients  = res as [Ingredient];
       console.log(this.ingredients)
     })

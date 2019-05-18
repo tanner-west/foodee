@@ -1,4 +1,10 @@
-<div *ngIf="activeShoppingList" class="container">
+
+<div class="loading-gif-container" *ngIf="dataIsLoading">
+  <img class="loading-gif" src="../../assets/gradient-ring-loader.gif">
+</div>
+<div *ngIf="activeShoppingList && !dataIsLoading" class="container">
+  <h1>My Shopping List</h1>
+
   <div class="card">
     <div class="card-body">
       <h5>{{activeShoppingList.shoppingListTitle}} Shopping List</h5>
